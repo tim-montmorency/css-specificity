@@ -1,38 +1,34 @@
-# CSS Specificity
-It's a fun quiz to learn and practice CSS Specificity.
-URL: [css-specificity.smnarnold.com](https://css-specificity.smnarnold.com)
+# Spécificité CSS
+Un quiz amusant pour apprendre et pratiquer la spécificité en CSS.
 
-## Dev
-Install the project with npm:
+## Développement
+Installer le projet avec npm :
 ```
 npm i 
 ```
-Start SCSS & JS watcher:
+Démarrer le serveur de développement :
 ```
 npm run dev 
 ```
 
-## Deployment
-Minify files
+## Déploiement
+Minifier les fichiers :
 ```
 npm run build
 ```
-Upload dist folder content to server
+Téléverser le contenu du dossier dist sur le serveur
 
-## Level Structure
-| Key | Type | Description |
+## Structure des niveaux
+| Clé | Type | Description |
 | --- | ---- | ----------- |
-| slug | String | Used in the URL and for the descriptions translations |
-| html | String | HTML for this level. |
-| shuffle | Bool | Can the answers order be random? *(true by default)* |
-| answers | Array | Array of answers |    
-| selector | String | CSS Selector for an answer |
-| specificity | Number | Specificity of the matching selector |
-| bg | String | A forced background-color for this answer |
-| good | Bool | Is this answer the right one? | 
+| slug | String | Utilisé dans l'URL et pour les traductions des descriptions |
+| html | String | HTML pour ce niveau |
+| shuffle | Bool | L'ordre des réponses peut-il être aléatoire? *(true par défaut)* |
+| answers | Array | Tableau de réponses |    
+| selector | String | Sélecteur CSS pour une réponse |
+| specificity | Number | Spécificité du sélecteur correspondant |
+| bg | String | Couleur de fond forcée pour cette réponse |
+| good | Bool | Est-ce la bonne réponse? | 
 
-## Languages supported
-- English, Français
-
-## Contributors
-- [smnarnold](https://github.com/smnarnold)
+## Langue
+- Français

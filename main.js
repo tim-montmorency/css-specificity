@@ -1,8 +1,8 @@
 import './style.scss';
 import * as levelsArr from './src/data/levels.json';
+import * as frData from './src/data/fr.json';
 import Level from './src/scripts/level.js';
 
-import ogen from './src/img/og-en.png';
 import ogfr from './src/img/og-fr.png';
 
 class Game {
@@ -10,9 +10,7 @@ class Game {
     this.levelsArr = levelsArr.content;
     this.level = 0;
     this.score = 0;
-    this.supportedLanguages = ['en', 'fr']
-    this.lang = navigator.language.substring(0,2).toLowerCase();
-    this.lang = this.supportedLanguages.includes(this.lang) ? this.lang : 'en'; // Fallback en
+    this.lang = 'fr';
 
     this.dom = {
       app: document.querySelector('#app'),
@@ -37,7 +35,6 @@ class Game {
         value: document.querySelector('.score__value'),
         total: document.querySelector('.score__total'),
       },
-      lang: document.querySelector('.lang'),
       popup: {
         el: document.querySelector('.popup'),
         main: document.querySelector('.popup__main'),
@@ -60,11 +57,6 @@ class Game {
   }
 
   loadGame() {
-    const savedLang = localStorage.getItem('lang');
-    if (savedLang !== null) { this.lang = savedLang; }
-
-    this.dom.lang.value = this.lang;
-
     const savedLevel = localStorage.getItem('level');
     if (savedLevel !== null) { this.level = parseInt(savedLevel); }
 
@@ -79,33 +71,18 @@ class Game {
   }
 
   loadData() {
-    fetch(`./src/data/${this.lang}.json`)
-    .then(res => res.json())
-    .then(data => {
-      this.data = data;
+    this.data = frData.default || frData;
 
-      this.i18n();
-      this.goToLevel(this.level);
-      this.dom.app.classList.add('is-ready');
-    }) 
-  }
-
-  changeLang() {
-    this.lang = this.dom.lang.value;
-    localStorage.setItem('lang', this.lang);
-    this.dom.app.classList.remove('is-ready');
-    this.loadData();
+    this.i18n();
+    this.goToLevel(this.level);
+    this.dom.app.classList.add('is-ready');
   }
 
   i18n() {
-    document.documentElement.lang = this.lang;
+    document.documentElement.lang = 'fr';
     document.querySelector('meta[property="og:title"]').content = this.data.title;
     document.querySelector('meta[property="og:description"]').content = this.data.slogan;
-    if(this.lang === 'fr') {
-      document.querySelector('meta[property="og:image"]').content = ogfr;
-    } else {
-      document.querySelector('meta[property="og:image"]').content = ogen;
-    }
+    document.querySelector('meta[property="og:image"]').content = ogfr;
 
     this.dom.level.label.innerText = this.data.level;
     this.dom.level.of.innerText = this.data.of;
@@ -126,7 +103,6 @@ class Game {
     document.body.addEventListener('fail', () => this.failPopup(), false);
     
     this.dom.footer.reset.addEventListener('click', () => this.reset(), false);
-    this.dom.lang.addEventListener('change', () => this.changeLang(), false);
     this.dom.popup.next.addEventListener('click', () => this.nextLevel(), false);
     this.dom.popup.showResult.addEventListener('click', () => this.setPopupEnd(), false);
     this.dom.popup.randomQuestions.addEventListener('click', () => this.randomizeQuestions(), false);
